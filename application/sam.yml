@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Serverless application infrastructure
+
+Globals:
+
+  Function:
+    Runtime: java8
+    MemorySize: 256
+    Timeout: 10
+    AutoPublishAlias: live
+
+Resources:
+
+  Lambda1:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: io.symphonia.Lambda1::handler
+      CodeUri: lambda1/target/lambda.jar
+
+  Lambda2:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: io.symphonia.Lambda2::handler
+      CodeUri: lambda2/target/lambda.jar
