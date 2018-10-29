@@ -1,7 +1,5 @@
 # Continuous Delivery in an Ephemeral World
 
-**O'Reilly Software Architecture Conference, NYC, 2018**
-
 ## Introduction
 
 [Symphonia](https://www.symphonia.io) co-founder [John Chapin](https://twitter.com/johnchapin) offers an overview of existing cloud-native build systems and outlines their benefits and drawbacks, including cost efficiency, environment stability, and provenance.
@@ -34,10 +32,10 @@ Create a CodeCommit repository in your AWS account. This is where we'll check
 in our Serverless application code.
 
 ```
-$ cd symphonia-sacon-nyc-2018-tutorial
+$ cd symphonia-velocity-london-2018-tutorial
 $ cd phase1
 $ aws cloudformation create-stack \
-    --region us-west-2 \
+    --region eu-west-2 \
     --stack-name repository \
     --template-body file://repository-cfn.yml
 ```
@@ -52,7 +50,7 @@ Now, let's push the Serverless application code to the our new Git repository.
 $ cd ../application
 $ git init
 $ git remote add origin \
-    https://git-codecommit.us-west-2.amazonaws.com/v1/repos/serverless-application
+    https://git-codecommit.eu-west-2.amazonaws.com/v1/repos/serverless-application
 $ git commit -am "Initial commit"
 $ git push --set-upstream origin master
 ``` 
@@ -68,7 +66,7 @@ Notice that the Serverless application code contains a `buildspec.yml` file. Tha
 ```
 $ cd ../phase2
 $ aws cloudformation create-stack \
-    --region us-west-2 \
+    --region eu-west-2 \
     --stack-name build-pipeline \
     --template-body file://build-pipeline-cfn.yml \
     --capabilities CAPABILITY_IAM
@@ -87,7 +85,7 @@ Our new pipeline includes two stages; `Source` and `Build`, each of which contai
 ```
 $ cd ../phase3
 $ aws cloudformation update-stack \
-    --region us-west-2 \
+    --region eu-west-2 \
     --stack-name build-pipeline \
     --template-body file://build-pipeline-cfn.yml \
     --capabilities CAPABILITY_IAM
@@ -104,7 +102,7 @@ In this phase, we'll go from automated continuous integration to truly continuou
 ```
 $ cd ../phase4
 $ aws cloudformation update-stack \
-    --region us-west-2 \
+    --region eu-west-2 \
     --stack-name build-pipeline \
     --template-body file://build-pipeline-cfn.yml \
     --capabilities CAPABILITY_IAM
@@ -130,7 +128,7 @@ This phase involves speeding up our builds using a <del>highly-customized Docker
 ```
 $ cd ../phase5
 $ aws cloudformation update-stack \
-    --region us-west-2 \
+    --region eu-west-2 \
     --stack-name build-pipeline \
     --template-body file://build-pipeline-cfn.yml \
     --capabilities CAPABILITY_IAM
@@ -146,3 +144,21 @@ $ git push
 ```
 
 To see the positive outcome of this change, we'll need to run the build a couple of times. Do that from the CodePipeline [web console](https://console.aws.amazon.com/codepipeline/home).
+
+## Phase 6 - Person in the middle
+
+In this phase, we introduce a manual approval step, which will ensure that a highly reliable, logical, and even-tempered human will have an opportunity to weigh in on whether our build should proceed.
+
+We have to provide our email address, which will be used as a subscription target of an SNS topic. Watch your email for a confirmation!
+
+```
+$ cd ../phase6
+$ aws cloudformation update-stack \
+    --region eu-west-2 \
+    --stack-name build-pipeline \
+    --template-body file://build-pipeline-cfn.yml \
+    --capabilities CAPABILITY_IAM \
+    --parameters ParameterKey=Email,ParameterValue=YOUR_EMAIL_ADDRESS
+```
+
+Now, our pipeline will pause before deploying, so we can investigate the CloudFormation changeset and either allow the deployment to proceed, or stop it in case there's a problem.
