@@ -32,7 +32,7 @@ Create a CodeCommit repository in your AWS account. This is where we'll check
 in our Serverless application code.
 
 ```
-$ cd symphonia-velocity-london-2018-tutorial
+$ cd sacon-london-2018-tutorial
 $ cd phase1
 $ aws cloudformation create-stack \
     --region eu-west-2 \
