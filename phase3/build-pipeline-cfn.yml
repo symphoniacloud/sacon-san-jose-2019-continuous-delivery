@@ -11,7 +11,6 @@ Resources:
 
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
-    DependsOn: CodeBuildRole
     Properties:
       Artifacts:
         Type: CODEPIPELINE
@@ -40,7 +39,7 @@ Resources:
               ActionTypeId:
                 Category: Source
                 Owner: AWS
-                Version: '1'
+                Version: "1"
                 Provider: CodeCommit
               OutputArtifacts:
                 - Name: MySource
@@ -54,7 +53,7 @@ Resources:
               ActionTypeId:
                 Category: Build
                 Owner: AWS
-                Version: 1
+                Version: "1"
                 Provider: CodeBuild
               OutputArtifacts:
                 - Name: MyAppBuild

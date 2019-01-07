@@ -19,7 +19,6 @@ Resources:
 
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
-    DependsOn: CodeBuildRole
     Properties:
       Artifacts:
         Type: CODEPIPELINE
@@ -68,7 +67,7 @@ Resources:
               ActionTypeId:
                 Category: Build
                 Owner: AWS
-                Version: 1
+                Version: "1"
                 Provider: CodeBuild
               OutputArtifacts:
                 - Name: MyAppBuild
@@ -84,7 +83,7 @@ Resources:
                 Category: Deploy
                 Owner: AWS
                 Provider: CloudFormation
-                Version: '1'
+                Version: "1"
               InputArtifacts:
                 - Name: MyAppBuild
               Configuration:
@@ -93,7 +92,7 @@ Resources:
                 RoleArn: !GetAtt CloudformationRole.Arn
                 StackName: !Ref ApplicationStackName
                 ChangeSetName: changeset
-                TemplatePath: !Sub "MyAppBuild::packaged-sam.yml" # Must match buildspec.yml value
+                TemplatePath: "MyAppBuild::packaged-sam.yml" # Must match buildspec.yml value
             - Name: Approve
               RunOrder: 2
               ActionTypeId:
@@ -103,7 +102,7 @@ Resources:
                 Version: '1'
               Configuration:
                 NotificationArn: !Ref CodePipelineTopic
-                CustomData: !Sub 'Do you want to deploy?'
+                CustomData: "Do you want to deploy?"
             - Name: ExecuteChangeSet
               RunOrder: 3
               ActionTypeId:
