@@ -41,20 +41,31 @@ $ aws cloudformation create-stack \
 ```
 
 By default, the repository will be named `serverless-application`. If you change that, make sure to use the new name in the other commands in this tutorial.
- 
-Follow the instructions [here](https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-connect.html) to access the repository using `git`. To set up
-git access using the `credential-helper`, follow the instructions [here](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-https-unixes.html).
 
-Now, let's push the Serverless application code to the our new Git repository.
+Set up access to CodeCommit via Git, using the AWS-provided `credential-helper`:
 
 ```
 $ cd ../application
 $ git init
+$ git config --local credential.helper '!aws codecommit credential-helper $@'
+$ git config --local credential.UseHttpPath true
+```
+
+Now, let's push the Serverless application code to the our new Git repository.
+
+```
 $ git remote add origin \
     https://git-codecommit.us-west-2.amazonaws.com/v1/repos/serverless-application
-$ git commit -am "Initial commit"
+$ git add .
+$ git commit -m "Initial commit"
 $ git push --set-upstream origin master
 ``` 
+ 
+If you have any trouble connecting to CodeCommit, review the CodeCommit
+connection documentation here
+[here](https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-connect.html).
+and the `credential-helper` documentation
+[here](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-https-unixes.html).
 
 Go check out the code in the AWS CodeCommit [web console](https://console.aws.amazon.com/codecommit/home).
 
