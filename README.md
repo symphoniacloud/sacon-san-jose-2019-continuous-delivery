@@ -42,7 +42,8 @@ $ aws cloudformation create-stack \
 
 By default, the repository will be named `serverless-application`. If you change that, make sure to use the new name in the other commands in this tutorial.
  
-Follow the instructions [here](https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-connect.html) to access the repository using `git`.
+Follow the instructions [here](https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-connect.html) to access the repository using `git`. To set up
+git access using the `credential-helper`, follow the instructions [here](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-https-unixes.html).
 
 Now, let's push the Serverless application code to the our new Git repository.
 
