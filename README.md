@@ -35,7 +35,7 @@ in our Serverless application code.
 $ cd sacon-san-jose-2019-continuous-delivery
 $ cd phase1
 $ aws cloudformation create-stack \
-    --region us-east-1 \
+    --region us-west-2 \
     --stack-name repository \
     --template-body file://repository-cfn.yml
 ```
@@ -50,7 +50,7 @@ Now, let's push the Serverless application code to the our new Git repository.
 $ cd ../application
 $ git init
 $ git remote add origin \
-    https://git-codecommit.us-east-1.amazonaws.com/v1/repos/serverless-application
+    https://git-codecommit.us-west-2.amazonaws.com/v1/repos/serverless-application
 $ git commit -am "Initial commit"
 $ git push --set-upstream origin master
 ``` 
@@ -66,7 +66,7 @@ Notice that the Serverless application code contains a `buildspec.yml` file. Tha
 ```
 $ cd ../phase2
 $ aws cloudformation create-stack \
-    --region us-east-1 \
+    --region us-west-2 \
     --stack-name build-pipeline \
     --template-body file://build-pipeline-cfn.yml \
     --capabilities CAPABILITY_IAM
@@ -85,7 +85,7 @@ Our new pipeline includes two stages; `Source` and `Build`, each of which contai
 ```
 $ cd ../phase3
 $ aws cloudformation update-stack \
-    --region us-east-1 \
+    --region us-west-2 \
     --stack-name build-pipeline \
     --template-body file://build-pipeline-cfn.yml \
     --capabilities CAPABILITY_IAM
@@ -102,7 +102,7 @@ In this phase, we'll go from automated continuous integration to truly continuou
 ```
 $ cd ../phase4
 $ aws cloudformation update-stack \
-    --region us-east-1 \
+    --region us-west-2 \
     --stack-name build-pipeline \
     --template-body file://build-pipeline-cfn.yml \
     --capabilities CAPABILITY_IAM
@@ -128,7 +128,7 @@ This phase involves speeding up our builds using a <del>highly-customized Docker
 ```
 $ cd ../phase5
 $ aws cloudformation update-stack \
-    --region us-east-1 \
+    --region us-west-2 \
     --stack-name build-pipeline \
     --template-body file://build-pipeline-cfn.yml \
     --capabilities CAPABILITY_IAM
@@ -154,7 +154,7 @@ We have to provide our email address, which will be used as a subscription targe
 ```
 $ cd ../phase6
 $ aws cloudformation update-stack \
-    --region us-east-1 \
+    --region us-west-2 \
     --stack-name build-pipeline \
     --template-body file://build-pipeline-cfn.yml \
     --capabilities CAPABILITY_IAM \
